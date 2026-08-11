@@ -65,11 +65,11 @@ npm run test:install-browser
 # Modo watch (abre Chrome)
 npm test
 
-# CI / una sola ejecución (Chrome Headless + coverage)
+# CI / una sola ejecución (genera reporte de cobertura)
 npm run test:ci
 ```
 
-El reporte de cobertura queda en `coverage/patients/`.
+Al ejecutar `npm run test:ci`, Karma genera el reporte en `coverage/patients/` (carpeta temporal, ignorada por git).
 
 Specs incluidos:
 - `PatientService` (HttpClient + unwrap de `ApiResponse`)
