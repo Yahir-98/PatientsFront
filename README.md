@@ -5,7 +5,7 @@ Aplicación front-end en **Angular 16** + **PrimeNG** para consumir la API de pa
 ## Requisitos
 
 - Node.js 18+
-- API backend en ejecución (por defecto `https://localhost:7001`)
+- API backend en ejecución (por defecto `http://localhost:53361`)
 
 ## Instalación
 
@@ -15,18 +15,16 @@ npm install
 
 ## Configuración de la API
 
-Edita la URL en:
+La URL local está en:
 
 - `src/environments/environment.ts` (desarrollo)
 - `src/environments/environment.prod.ts` (producción)
 
-También puedes usar el proxy (`proxy.conf.json`) para evitar CORS en local:
-
-```bash
-npm start
+```ts
+apiUrl: 'http://localhost:53361/api'
 ```
 
-El proxy redirige `/api` hacia `https://localhost:7001`.
+También puedes usar el proxy (`proxy.conf.json`) para evitar CORS en local. El proxy redirige `/api` hacia `http://localhost:53361`.
 
 Si usas proxy, cambia `apiUrl` a:
 
