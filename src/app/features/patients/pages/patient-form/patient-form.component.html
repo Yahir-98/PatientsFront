@@ -1,0 +1,117 @@
+<div class="page">
+  <div class="page__header">
+    <div>
+      <h1>{{ title }}</h1>
+      <p>Completa los datos del paciente. Los campos con * son obligatorios.</p>
+    </div>
+    <button
+      pButton
+      type="button"
+      label="Volver"
+      icon="pi pi-arrow-left"
+      class="p-button-text"
+      (click)="cancel()"
+    ></button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+  </div>
+
+  <form *ngIf="!loading" class="form-card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-grid">
+      <div class="field">
+        <label for="documentType">Tipo de documento *</label>
+        <p-dropdown
+          inputId="documentType"
+          formControlName="documentType"
+          [options]="documentTypes"
+          placeholder="Selecciona"
+          styleClass="w-full"
+        ></p-dropdown>
+        <small class="error" *ngIf="isInvalid('documentType')">
+          El tipo de documento es obligatorio.
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="documentNumber">Número de documento *</label>
+        <input
+          id="documentNumber"
+          pInputText
+          formControlName="documentNumber"
+          maxlength="20"
+        />
+        <small class="error" *ngIf="isInvalid('documentNumber') && form.get('documentNumber')?.errors?.['required']">
+          El número de documento es obligatorio.
+        </small>
+        <small class="error" *ngIf="form.get('documentNumber')?.errors?.['duplicate']">
+          Ya existe un paciente con este documento.
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="firstName">Nombres *</label>
+        <input id="firstName" pInputText formControlName="firstName" maxlength="80" />
+        <small class="error" *ngIf="isInvalid('firstName')">
+          El nombre es obligatorio.
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="lastName">Apellidos *</label>
+        <input id="lastName" pInputText formControlName="lastName" maxlength="80" />
+        <small class="error" *ngIf="isInvalid('lastName')">
+          Los apellidos son obligatorios.
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="birthDate">Fecha de nacimiento *</label>
+        <p-calendar
+          inputId="birthDate"
+          formControlName="birthDate"
+          [showIcon]="true"
+          dateFormat="yy-mm-dd"
+          [maxDate]="today"
+          styleClass="w-full"
+        ></p-calendar>
+        <small class="error" *ngIf="isInvalid('birthDate')">
+          La fecha de nacimiento es obligatoria.
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="phoneNumber">Teléfono</label>
+        <input id="phoneNumber" pInputText formControlName="phoneNumber" maxlength="20" />
+      </div>
+
+      <div class="field field--full">
+        <label for="email">Email</label>
+        <input id="email" pInputText formControlName="email" maxlength="120" />
+        <small class="error" *ngIf="isInvalid('email')">
+          Ingresa un email válido.
+        </small>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        class="p-button-outlined p-button-secondary"
+        (click)="cancel()"
+        [disabled]="submitting"
+      ></button>
+      <button
+        pButton
+        type="submit"
+        [label]="isEdit ? 'Guardar cambios' : 'Crear paciente'"
+        icon="pi pi-check"
+        [loading]="submitting"
+        [disabled]="submitting"
+      ></button>
+    </div>
+  </form>
+</div>
